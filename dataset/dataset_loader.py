@@ -1,23 +1,40 @@
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.datasets import cifar10
 
-def load_and_preprocess_data():
-    (x_train, y_train), (x_test, y_test) = cifar10.load_data()
+import tensorflow as tf
+from tensorflow.keras.datasets import fashion_mnist
 
-    x_train = x_train / 255.0
-    x_test = x_test / 255.0
+def preprocess_image(image, label):
 
-    train_datagen = ImageDataGenerator(
-        rotation_range=20,
-        width_shift_range=0.2,
-        height_shift_range=0.2,
-        shear_range=0.2,
-        zoom_range=0.2,
-        horizontal_flip=True
+    image = tf.expand_dims(image, axis=-1)
+    image = tf.image.grayscale_to_rgb(image)
+    image = tf.image.resize(image, (64, 64))
+    image = tf.cast(image, tf.float32) / 255.0
+
+    return image, label
+
+def load_and_preprocess_data(batch_size=64):
+    (x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
+
+    y_train = tf.keras.utils.to_categorical(y_train, 10)
+    y_test = tf.keras.utils.to_categorical(y_test, 10)
+
+    train_ds = (
+        tf.data.Dataset.from_tensor_slices((x_train, y_train))
+        .map(preprocess_image, num_parallel_calls=tf.data.AUTOTUNE)
+        .shuffle(buffer_size=1000)
+        .cache()
+        .batch(batch_size)
+        .prefetch(buffer_size=tf.data.AUTOTUNE)
     )
-    test_datagen = ImageDataGenerator()
 
-    train_generator = train_datagen.flow(x_train, y_train, batch_size=32)
-    test_generator = test_datagen.flow(x_test, y_test, batch_size=32)
 
-    return train_generator, test_generator
+    test_ds = (
+        tf.data.Dataset.from_tensor_slices((x_test, y_test))
+        .map(preprocess_image, num_parallel_calls=tf.data.AUTOTUNE)
+        .cache()
+        .batch(batch_size)
+        .prefetch(buffer_size=tf.data.AUTOTUNE)
+    )
+
+    return train_ds, test_ds
+
+train_ds, test_ds = load_and_preprocess_data(batch_size=64)
