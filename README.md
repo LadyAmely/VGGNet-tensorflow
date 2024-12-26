@@ -18,6 +18,8 @@ Using Fashion-MNIST dataset, the model achieved the following results:
 
 ![Fashion-MNIST](https://github.com/LadyAmely/VGGNet-tensorflow/blob/master/plots/predictions_visualizations.png)
 ## References
-Original Paper: "Very Deep Convolutional Networks for Large-Scale Image Recognition"('https://arxiv.org/pdf/1409.1556')
+Original Paper: ["Very Deep Convolutional Networks for Large-Scale Image Recognition"] 
+(https://arxiv.org/pdf/1409.1556).
+
 Author: Karen Simonyan, Andrew Zisserman
 
