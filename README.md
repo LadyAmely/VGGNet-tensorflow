@@ -12,11 +12,11 @@ In this project, VGGNet was trained on the Fashion-MNIST dataset, showcasing its
 Using Fashion-MNIST dataset, the model achieved the following results:
 
 - **Precision**: **90.23%**
-- **Recall**: ** 90.26%**
+- **Recall**: **90.26%**
 - **F1-Score**: **90.15%**
 ---
 
-![Fashion-MNIST](https://github.com/LadyAmely/AlexNet-tensorflow/blob/master/plots/predictions_visualizations.png)
+![Fashion-MNIST](https://github.com/LadyAmely/VGGNet-tensorflow/blob/master/plots/predictions_visualizations.png)
 ## References
 Original Paper: "Very Deep Convolutional Networks for Large-Scale Image Recognition"
 Author: Karen Simonyan, Andrew Zisserman
